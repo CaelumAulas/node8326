@@ -14,7 +14,6 @@ module.exports = function(app){
 
     conexao.query(`SELECT * FROM livros`, function(erro, listaLivros, fields){
       //console.log(erro, listaLivros, fields);
-
       response.render('produtos/lista', {listaLivros});
       
     })
