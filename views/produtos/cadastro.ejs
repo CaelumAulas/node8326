@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>Cadastro de livros</title>
+</head>
+<body>
+<div class="container">
+    <h1>Cadastro de Livros</h1>
+
+    <form action="detalhe" method="post" class="col-6">
+        <div class="form-group">
+            <label for="titulo">Titulo</label>
+            <input value="" id="titulo" name="titulo" type="text" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="preco">Preço</label>
+            <input value="" id="preco" name="preco" type="text" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="descricao">Descrição</label>
+            <textarea name="descricao" id="descricao" class="form-control">
+            </textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success">Cadastrar</button>
+    </form>
+</div>
+</body>
+</html>
