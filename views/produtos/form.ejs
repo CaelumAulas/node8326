@@ -11,9 +11,13 @@
 <div class="container">
     <h1>Cadastro de Livros</h1>
 
-    <% if(locals.erro){ %>
+    <% if(locals.erros){ %>
     <p>
-        <%= erro %>
+        <% for(const erro of erros) { %>
+            <div class="alert alert-danger">
+                <%= erro.msg %>
+            </div>
+        <% } %>
     </p>
     <% } %>
 

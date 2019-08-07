@@ -12,6 +12,10 @@ module.exports = function(app){
     response.render('produtos/form', {livro})
   })
 
+  app.post('/produtos/detalhe', (request, response, next) => {
+    produtoController.validar(request, response, next)
+  })
+
   app.post('/produtos/detalhe'
     ,(request, response) => {
       produtoController.cadastrar(request, response)

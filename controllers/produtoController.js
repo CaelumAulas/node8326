@@ -13,7 +13,6 @@ class ProdutoController {
     .listar()
       .then(
         listaLivros => {
-
           response.format({
             html: () => {
               response.render('produtos/lista', {listaLivros});
@@ -34,6 +33,22 @@ class ProdutoController {
     conexao.end();
   }
 
+  validar(request, response, next) {
+    validator.assert('titulo', 'Título vazio').notEmpty()
+    validator.assert('preco', 'Preço inválido').isNumeric()
+
+    const listaErros = request.validationErrors()
+
+    if(listaErros.length > 0) {
+      response.render('produtos/form',  {
+        erros: listaErros, 
+        livro: request.body
+      })
+    } else {
+      next()
+    }
+  }
+
   cadastrar(request, response) {
     
     const conexao = this.app.config.connectionFactory();
@@ -43,24 +58,39 @@ class ProdutoController {
     const livro = request.body;
 
     produtoDao
-     .cadastrar(livro)
-     .then(
-       () => {
-         response.format({
+      .cadastrar(livro)
+      .then(
+        () => {
+
+          response.format({
           html: () => {
             response.redirect('/produtos')
           }
           ,json: () => {
             response.json({sucesso: 'cadastrado com sucesso'})
           }
-         })
-       }
-     )
-     .catch(
-       erro => {
-         response.render('produtos/form',{erro, livro})
-       }
-     )
+          })
+        }
+      )
+      .catch(
+        erro => {
+          // erro de sistema
+          // Exceção
+          // Exception
+          
+          response.status(500)
+          
+          response.format({
+            html: () => {
+              response.render('erros/500', {erro})
+            }
+            ,json: () => {
+              response.json({erro: erro})
+            }
+            })
+        }
+      )
+
 
    conexao.end();
   }
