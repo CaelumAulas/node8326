@@ -1,6 +1,5 @@
 const express = require('express');
 const consign = require('consign');
-const bodyParser = require('body-parser');
 
 const expressValidator = require('express-validator');
 
@@ -14,9 +13,11 @@ module.exports = function(){
   // Middleware
   // Executa para cada request
   app.use(expressValidator())
-  
-  app.use(express.static('./node_modules/bootstrap/dist/'));
-  app.use(express.static('./public/'));
+
+  app.use((request, response, next) => {
+    response.header('Access-Control-Allow-Origin', '*')
+    next()
+  })
 
   consign()
     .include('./routes')
@@ -24,8 +25,35 @@ module.exports = function(){
     .then('./repository')
     .into(app);
 
+  app.use(express.static('./node_modules/bootstrap/dist/'));
+  app.use(express.static('./public/'));
+
+  // (request, response, next) -> tratador de requests padrão
+  // (request, response, next) -> tratador de requests com erro padrão
+
+  app.use((erro, request, response, next) => {
+    console.error(erro)
+    next(erro)
+  })
+
+  app.use((erro, request, response, next) => {
+    response.status(500)
+
+          
+    response.format({
+      html: () => {
+        response.render('erros/500', {erro})
+      }
+      ,json: () => {
+        response.json({erro: erro})
+      }
+    })
+  })
+
   app.use((request, response, next) => {
-    response.render('erros/404')
+    response
+      .status(404)
+      .render('erros/404')
   })
 
   return app;

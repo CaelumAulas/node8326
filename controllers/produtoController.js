@@ -13,6 +13,7 @@ class ProdutoController {
     .listar()
       .then(
         listaLivros => {
+
           response.format({
             html: () => {
               response.render('produtos/lista', {listaLivros});
@@ -49,16 +50,16 @@ class ProdutoController {
     }
   }
 
-  cadastrar(request, response) {
-    
+  cadastrar(request, response, next) {
     const conexao = this.app.config.connectionFactory();
     const ProdutoDao  = this.app.repository.produtoDao;
     const produtoDao = new ProdutoDao(conexao);
 
     const livro = request.body;
 
-    produtoDao
-      .cadastrar(livro)
+    const promiseCadastro = produtoDao.cadastrar(livro)
+
+    promiseCadastro
       .then(
         () => {
 
@@ -72,25 +73,7 @@ class ProdutoController {
           })
         }
       )
-      .catch(
-        erro => {
-          // erro de sistema
-          // Exceção
-          // Exception
-          
-          response.status(500)
-          
-          response.format({
-            html: () => {
-              response.render('erros/500', {erro})
-            }
-            ,json: () => {
-              response.json({erro: erro})
-            }
-            })
-        }
-      )
-
+      .catch(erro => next(erro))
 
    conexao.end();
   }

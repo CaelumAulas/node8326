@@ -17,11 +17,11 @@ module.exports = function(app){
   app.post('/produtos/detalhe'
     ,express.urlencoded({ extended: false })
     ,express.json()
-    ,(request, response, next) => {
+    ,(request, response, next) => 
       produtoController.validar(request, response, next)
-    }
-    ,(request, response) => {
-      produtoController.cadastrar(request, response)
-  })
+    ,(request, response, next) => 
+        produtoController.cadastrar(request, response, next)
+    
+  )
 
 }

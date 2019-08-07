@@ -28,7 +28,7 @@ class ProdutoDAO {
     return new Promise((resolve, reject) => {
       this._conexao
           .query(
-            'INSERT INTO livros SET ?', 
+            'INSERT INTO lis SET ?', 
             livro,
             function(erro, results, fields){
               if(erro){
