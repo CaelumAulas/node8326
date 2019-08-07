@@ -63,6 +63,9 @@ class ProdutoController {
       .then(
         () => {
 
+          const io = this.app.get('io')
+          io.emit('livroNovo', 'Livro cadastrado, de uma olhada na tabela')
+
           response.format({
           html: () => {
             response.redirect('/produtos')

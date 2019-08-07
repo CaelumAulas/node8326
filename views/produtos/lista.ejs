@@ -38,7 +38,15 @@
         
     </div>
 
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+    // Pede para abrir o socket
+    const socket = io()
 
-
+    // esperando mensagens
+    socket.on('livroNovo', (mensagem) => {
+        alert(mensagem)
+    })    
+    </script>
 </body>
 </html>
