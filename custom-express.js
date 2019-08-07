@@ -13,8 +13,6 @@ module.exports = function(){
   // Plugin do express
   // Middleware
   // Executa para cada request
-  app.use(bodyParser.urlencoded({ extended: false }))
-  app.use(bodyParser.json())
   app.use(expressValidator())
   
   app.use(express.static('./node_modules/bootstrap/dist/'));

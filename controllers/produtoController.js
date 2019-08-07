@@ -34,8 +34,8 @@ class ProdutoController {
   }
 
   validar(request, response, next) {
-    validator.assert('titulo', 'Título vazio').notEmpty()
-    validator.assert('preco', 'Preço inválido').isNumeric()
+    request.assert('titulo', 'Título vazio').notEmpty()
+    request.assert('preco', 'Preço inválido').isNumeric()
 
     const listaErros = request.validationErrors()
 

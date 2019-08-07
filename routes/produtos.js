@@ -1,3 +1,5 @@
+const express = require('express');
+
 module.exports = function(app){
 
   const ProdutoController = require('../controllers/produtoController');
@@ -12,11 +14,12 @@ module.exports = function(app){
     response.render('produtos/form', {livro})
   })
 
-  app.post('/produtos/detalhe', (request, response, next) => {
-    produtoController.validar(request, response, next)
-  })
-
   app.post('/produtos/detalhe'
+    ,express.urlencoded({ extended: false })
+    ,express.json()
+    ,(request, response, next) => {
+      produtoController.validar(request, response, next)
+    }
     ,(request, response) => {
       produtoController.cadastrar(request, response)
   })
